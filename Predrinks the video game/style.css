@@ -1,0 +1,56 @@
+
+body {
+  background-image: url("background.jpg"); /* Assuming image is in an "images" folder */
+  background-position: center; /* Image centered horizontally and vertically */
+  background-size: cover;
+  color: white;
+}
+
+#story, #message {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#beer-btn {
+  background-color: #ffc107;
+}
+
+#shot-btn {
+  background-color: #ff69b4;
+}
+
+#club-btn {
+  background-color: green;
+  color: white;
+}
+
+#club-btn[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+#retry-btn {
+  background-color: lightblue; /* Example color change */
+
+
+}
+#game-container {
+  display: flex; /* Make the container a flexbox */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center elements horizontally */
+  justify-content: center; /* Center elements vertically */
+  height: 500px;
+  width: 500px; /* Maintain container width */
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: sans-serif;
+}
