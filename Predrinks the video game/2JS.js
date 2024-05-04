@@ -13,6 +13,8 @@ const getFoodBtn = document.getElementById("get-food-btn"); // New button
 const clubBtn = document.getElementById("club-btn");
 const waterBtn = document.getElementById("water-btn"); // New button
 const retryBtn = document.getElementById("retry-btn");
+const saveGameDataBtn = document.getElementById("save-game-data-btn");
+
 
 const messages = [
   "You take a sip, feeling the good vibes flow!",
@@ -30,7 +32,9 @@ shotBtn.disabled = true;
 getFoodBtn.disabled = true;
 waterBtn.disabled = true;
 clubBtn.disabled = true;
-retryBtn.disabled = false;
+retryBtn.disabled = true;
+saveGameDataBtn.disabled = true;
+
 
 
 submitNameBtn.addEventListener("click", function() {
@@ -42,6 +46,7 @@ submitNameBtn.addEventListener("click", function() {
     shotBtn.disabled = false;
     getFoodBtn.disabled = false;
     waterBtn.disabled = false;
+	
 	
   } else {
     alert("Please enter a username!");
@@ -55,7 +60,8 @@ function takeDrink(amount) {
     tipsyLevel += amount;
     drinksConsumed++;
     updateText();
-
+	retryBtn.disabled = false;
+ 
     // Check if tipsyLevel reaches the target (feeling tipsy hint)
     if (tipsyLevel >= targetTipsyLevel - 2) {
       messageEl.textContent += " You're feeling it! Maybe slow down a bit.";
@@ -69,9 +75,9 @@ function takeDrink(amount) {
       getFoodBtn.disabled = true;
       waterBtn.disabled = true;
       clubBtn.disabled = true;
-    } else if (tipsyLevel >= targetTipsyLevel && tipsyLevel <= 10) {
-      clubBtn.disabled = false; // Enable club button if in good tipsy range
-    }
+     } else if (tipsyLevel >= targetTipsyLevel && tipsyLevel <= 10) {
+      // clubBtn.disabled = false; // Enable club button if in good tipsy range
+     }
 
     // Random Events
     const randomEvent = Math.random();
@@ -113,8 +119,14 @@ clubBtn.addEventListener("click", function() {
   getFoodBtn.disabled = true; // Disable food button after club decision
   clubBtn.disabled = true;
   waterBtn.disabled = true;
-  retryBtn.disabld = false;  // Disable water button after club decision
+  retryBtn.disabled = false;  // Disable water button after club decision
 });
+
+retryBtn.addEventListener("click", function() {
+	messageEl.textContent = "You have clicked the retry button";
+	clubBtn.disabled = true;
+});
+
 function downloadGameData(jsonData) {
   const blob = new Blob([jsonData], { type: 'application/json' });
   const link = document.createElement('a');
@@ -146,15 +158,15 @@ waterBtn.addEventListener("click", function() {
   messageEl.textContent = "Feeling a bit dehydrated? Smart move, stay hydrated!";
 });
 
-retryBtn.addEventListener("click", handleRetryClick);
+
 
 function handleRetryClick() {
 	console.log("Retry button clicked!");
 	console.log("tipsyLevel reset to:", tipsyLevel);
 	console.log("drinksConsumed reset to:", drinksConsumed);
   // Reset game variables
-  tipsyLevel = 0;
-  drinksConsumed = 0;
+  tipsyLevel = null;
+  drinksConsumed = null;
   gotFood = false; // Reset food flag
   targetTipsyLevel = null; // Reset target tipsy level
 
@@ -172,6 +184,7 @@ function startGame(username) {
   drinksConsumed = 0;
   gotFood = false;
   targetTipsyLevel = Math.floor(Math.random() * (10 - 6 + 1)) + 5; // Generate random target tipsy level
+  clubBtn.disabled = true;
   
   function downloadGameData(jsonData) {
   const blob = new Blob([jsonData], { type: 'application/json' });
@@ -233,42 +246,5 @@ function startGame(username) {
 /*    saveGameData(targetTipsyLevel);
  */   
 }
-const saveGameDataBtn = document.getElementById("save-game-data-btn");
 saveGameDataBtn.addEventListener("click", saveGameData);
 
-/* function takeDrink(amount) {
-  // Generate random target tipsy level between 6 and 10 (inclusive)
-  targetTipsyLevel = Math.floor(Math.random() * (10 - 6 + 1)) + 5;
-
-  tipsyLevel += amount;
-  drinksConsumed++;
-  updateText();
-
-  const randomMessage = Math.floor(Math.random() * messages.length);
-  messageEl.textContent = messages[randomMessage];
-
-  // Check if tipsyLevel reaches the target (feeling tipsy hint)
-  if (tipsyLevel >= targetTipsyLevel - 2) {
-    messageEl.textContent += " You're feeling it! Maybe slow down a bit.";
-  }
-
-  // Check win/lose conditions
-  if (tipsyLevel > targetTipsyLevel) {
-    messageEl.textContent = "Ugh, you overdid it! Looks like no club for you tonight.";
-    beerBtn.disabled = true;
-    shotBtn.disabled = true;
-    clubBtn.disabled = true;
-    waterBtn.disabled = true; // Disable water button after losing
-	retryBtn.disabled = false;
-	getFoodBtn.disabled = true;
-  } else if (tipsyLevel >= targetTipsyLevel && tipsyLevel <= 10) {
-    clubBtn.disabled = false; // Enable club button if in good tipsy range
-  }
-  
-  // Random Events
-  const randomEvent = Math.random();
-  if (randomEvent < 0.2) { // 20% chance
-    messageEl.textContent += " Your friend offers you a strong drink! (Tipsy Level +3)";
-    tipsyLevel += 3;
-  }
-} */
