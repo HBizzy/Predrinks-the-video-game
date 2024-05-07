@@ -46,6 +46,8 @@ submitNameBtn.addEventListener("click", function() {
     shotBtn.disabled = false;
     getFoodBtn.disabled = false;
     waterBtn.disabled = false;
+	saveGameDataBtn.disabled = false;
+
 	
 	
   } else {
@@ -55,7 +57,7 @@ submitNameBtn.addEventListener("click", function() {
 
 function takeDrink(amount) {
     const randomMessage = Math.floor(Math.random() * messages.length);
-    messageEl.textContent = messages[randomMessage].replace("%NAME%", username); // Replace "%NAME%" with username
+    messageEl.textContent = messages[randomMessage]; // Replace "%NAME%" with username
 
     tipsyLevel += amount;
     drinksConsumed++;
@@ -75,6 +77,7 @@ function takeDrink(amount) {
       getFoodBtn.disabled = true;
       waterBtn.disabled = true;
       clubBtn.disabled = true;
+
      } else if (tipsyLevel >= targetTipsyLevel && tipsyLevel <= 10) {
       // clubBtn.disabled = false; // Enable club button if in good tipsy range
      }
@@ -197,7 +200,7 @@ function startGame(username) {
 
   function takeDrink(amount) {
     const randomMessage = Math.floor(Math.random() * messages.length);
-    messageEl.textContent = messages[randomMessage].replace("%NAME%", username); // Replace "%NAME%" with username
+    messageEl.textContent = messages[randomMessage];
 
     tipsyLevel += amount;
     drinksConsumed++;
